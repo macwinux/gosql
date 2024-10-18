@@ -41,6 +41,15 @@ const (
 	commaSymbol      symbol = ","
 	leftParenSymbol  symbol = "("
 	rightParenSymbol symbol = ")"
+	eqSymbol         symbol = "="
+	neqSymbol        symbol = "<>"
+	neqSymbol2       symbol = "!="
+	concatSymbol     symbol = "||"
+	plusSymbol       symbol = "+"
+	ltSymbol         symbol = "<"
+	lteSymbol        symbol = "<="
+	gtSymbol         symbol = ">"
+	gteSymbol        symbol = ">="
 )
 
 type tokenKind uint
@@ -260,6 +269,15 @@ func lexSymbol(source string, ic cursor) (*token, cursor, bool) {
 
 	// Syntax that should be kept
 	symbols := []symbol{
+		eqSymbol,
+		neqSymbol,
+		neqSymbol2,
+		ltSymbol,
+		lteSymbol,
+		gtSymbol,
+		gteSymbol,
+		concatSymbol,
+		plusSymbol,
 		commaSymbol,
 		leftParenSymbol,
 		rightParenSymbol,
@@ -296,12 +314,17 @@ func lexKeyword(source string, ic cursor) (*token, cursor, bool) {
 		selectKeyword,
 		insertKeyword,
 		valuesKeyword,
+		asKeyword,
 		tableKeyword,
 		createKeyword,
 		whereKeyword,
 		fromKeyword,
 		intoKeyword,
 		textKeyword,
+		trueKeyword,
+		falseKeyword,
+		nullKeyword,
+		intKeyword,
 	}
 
 	var options []string
@@ -410,7 +433,7 @@ lex:
 		if len(tokens) > 0 {
 			hint = " after " + tokens[len(tokens)-1].value
 		}
-		return nil, fmt.Errorf("Unable to lex token%s, at %d:%d", hint, cur.loc.line, cur.loc.col)
+		return nil, fmt.Errorf("unable to lex token%s, at %d:%d", hint, cur.loc.line, cur.loc.col)
 	}
 
 	return tokens, nil
