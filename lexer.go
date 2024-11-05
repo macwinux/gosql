@@ -224,16 +224,18 @@ func lexCharacterDelimited(source string, ic cursor, delimiter byte) (*token, cu
 		if c == delimiter {
 			// SQL escapes are via double characters, not backslash
 			if cur.pointer+1 >= uint(len(source)) || source[cur.pointer+1] != delimiter {
+				cur.pointer++
+				cur.loc.col++
 				return &token{
 					value: string(value),
 					loc:   ic.loc,
 					kind:  stringKind,
 				}, cur, true
-			} else {
-				value = append(value, delimiter)
-				cur.pointer++
-				cur.loc.col++
 			}
+
+			value = append(value, delimiter)
+			cur.pointer++
+			cur.loc.col++
 		}
 		value = append(value, c)
 		cur.loc.col++
@@ -242,7 +244,7 @@ func lexCharacterDelimited(source string, ic cursor, delimiter byte) (*token, cu
 }
 
 func lexString(source string, ic cursor) (*token, cursor, bool) {
-	return lexCharacterDelimited(source, ic, '\'')
+	return lexCharacterDelimited(source, ic, '"')
 }
 
 //	Symbols come from a fixed set of strings, so they're easy to compare against.
