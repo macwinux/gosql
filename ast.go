@@ -22,7 +22,7 @@ type Statement struct {
 // An insert statement for now, has a table name and a list of values to insert:
 type InsertStatement struct {
 	table  token
-	values *[]*expression
+	values []*expression
 }
 
 // An expression is a literal token or (in the future) a function call or inline operation:
@@ -74,7 +74,7 @@ type columnDefinition struct {
 
 type CreateTableStatement struct {
 	name token
-	cols *[]*columnDefinition
+	cols []*columnDefinition
 }
 
 // A select statemen, for now, has a table name and a list of column names:

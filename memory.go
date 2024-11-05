@@ -57,7 +57,7 @@ func (mb *MemoryBackend) CreateTable(crt *CreateTableStatement) error {
 	if crt.cols == nil {
 		return nil
 	}
-	for _, col := range *crt.cols {
+	for _, col := range crt.cols {
 		t.columns = append(t.columns, col.name.value)
 
 		var dt ColumnType
@@ -91,11 +91,11 @@ func (mb *MemoryBackend) Insert(inst *InsertStatement) error {
 
 	row := []MemoryCell{}
 
-	if len(*inst.values) != len(table.columns) {
+	if len(inst.values) != len(table.columns) {
 		return ErrMissingValues
 	}
 
-	for _, value := range *inst.values {
+	for _, value := range inst.values {
 		if value.kind != literalKind {
 			fmt.Println("Skipping non-literal.")
 			continue

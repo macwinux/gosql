@@ -117,24 +117,24 @@ func TestToken_lexString(t *testing.T) {
 		},
 		{
 			string: true,
-			value:  "'abc'",
+			value:  "\"abc\"",
 		},
 		{
 			string: true,
-			value:  "'a b'",
+			value:  "\"a b\"",
 		},
 		{
 			string: true,
-			value:  "'a' ",
+			value:  "\"a\" ",
 		},
 		{
 			string: true,
-			value:  "'a '' b'",
+			value:  "\"a \"\" b\"",
 		},
 		// false tests
 		{
 			string: false,
-			value:  "'",
+			value:  "\"",
 		},
 		{
 			string: false,
@@ -142,7 +142,7 @@ func TestToken_lexString(t *testing.T) {
 		},
 		{
 			string: false,
-			value:  " 'foo'",
+			value:  " \"foo\"",
 		},
 	}
 

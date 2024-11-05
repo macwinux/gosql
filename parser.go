@@ -120,7 +120,7 @@ func parseSelectStatement(tokens []*token, initialCursor uint, delimiter token) 
 		return nil, initialCursor, false
 	}
 
-	slct.item = *exps
+	slct.item = exps
 	cursor = newCursor
 
 	if expectToken(tokens, cursor, tokenFromKeyword(fromKeyword)) {
@@ -153,7 +153,7 @@ func parseToken(tokens []*token, initialCursor uint, kind tokenKind) (*token, ui
 // The parseExpressions helper will look for tokens separated by a comma until a delimiter is found.
 // It will use existing helpers plus parseExpression
 
-func parseExpressions(tokens []*token, initialCursor uint, delimiters []token) (*[]*expression, uint, bool) {
+func parseExpressions(tokens []*token, initialCursor uint, delimiters []token) ([]*expression, uint, bool) {
 	cursor := initialCursor
 	var exps []*expression
 
@@ -191,7 +191,7 @@ outer:
 		exps = append(exps, exp)
 	}
 
-	return &exps, cursor, true
+	return exps, cursor, true
 }
 
 // The parse Expression helper (for now) will look for a numeric, string, or identifier token.
@@ -332,7 +332,7 @@ func parseCreateTableStatement(tokens []*token, initialCursor uint, _ token) (*C
 
 // The parseColumnDefinitions helper will look column names followed by column types separated by a comma
 // and ending with some delimiter:
-func parseColumnDefinitions(tokens []*token, initialCursor uint, delimiter token) (*[]*columnDefinition, uint, bool) {
+func parseColumnDefinitions(tokens []*token, initialCursor uint, delimiter token) ([]*columnDefinition, uint, bool) {
 	cursor := initialCursor
 
 	cds := []*columnDefinition{}
@@ -376,5 +376,5 @@ func parseColumnDefinitions(tokens []*token, initialCursor uint, delimiter token
 			datatype: *ty,
 		})
 	}
-	return &cds, cursor, true
+	return cds, cursor, true
 }

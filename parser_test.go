@@ -23,7 +23,7 @@ func TestParse(t *testing.T) {
 								kind:  identifierKind,
 								value: "users",
 							},
-							values: &[]*expression{
+							values: []*expression{
 								{
 									literal: &token{
 										loc:   location{col: 25, line: 0},
@@ -58,7 +58,7 @@ func TestParse(t *testing.T) {
 								kind:  identifierKind,
 								value: "users",
 							},
-							cols: &[]*columnDefinition{
+							cols: []*columnDefinition{
 								{
 									name: token{
 										loc:   location{col: 20, line: 0},
